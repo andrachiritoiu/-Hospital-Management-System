@@ -1,3 +1,113 @@
+### EN
+
+----
+# Hospital Management System
+This project implements an object-oriented system for managing activities in a hospital, including patients, medical staff, and medical services.
+
+### 1. Person Hierarchy
+
+- **`Person`** (abstract base class)  
+  - **`Patient`**  
+  - **`HospitalStaff`** (abstract)  
+    - **`Doctor`**  
+      - evaluate patients  
+      - prescribe treatments  
+      - schedule surgeries  
+    - **`Nurse`**  
+      - administer treatments  
+      - perform lab analyses  
+
+### 2. Service Hierarchy
+
+- **`Service`** (base class)  
+  - **`Consultation`**  
+    - `InitialConsultation`  
+    - `FollowUpConsultation`  
+  - **`Surgery`**  
+  - **`LabTest`**  
+
+---
+
+## Features
+
+### For **Doctors**  
+- List all admitted patients  
+- View today's appointments  
+- Assess patient condition  
+- Prescribe personalized treatments  
+- Schedule and perform surgeries  
+- Discharge patients  
+- Calculate performance bonus  
+- Log out  
+
+### For **Nurses**  
+- List admitted patients (alphabetical)  
+- Administer treatments  
+- Run lab tests  
+- Calculate activity bonus  
+- Log out  
+
+---
+
+## Requirements
+
+- **Language:** C++ (no global variables; private/protected members)  
+- **Build:** CMake (project files generated via `cmake`)  
+- **Menu:** Interactive console menu demonstrating functionality  
+- **OOP:**  
+  - At least **2–3 class hierarchies** interacting via composition or method calls  
+  - One class with:  
+    - initialization constructors  
+    - overloaded constructors  
+    - copy constructor & `operator=`  
+    - destructor  
+    - `operator<<` and `operator>>`  
+    - one member operator overload  
+    - one non‑member operator overload  
+  - Virtual destructors and proper base‑class constructor chaining  
+  - Upcasts/downcasts showcased in meaningful methods  
+- **Templates:**  
+  - One class template + two instantiations  
+- **STL:**  
+  - Use at least two containers (e.g., `std::vector`, `std::list`)  
+  - One algorithm with a lambda (e.g., `std::sort`)  
+- **Static & Constants:**  
+  - One or more static data members/functions  
+  - Extensive use of `const` where appropriate  
+- **Exceptions:**  
+  - Derive from `std::exception`  
+  - Demonstrate exception propagation and upcasting in `catch` blocks  
+- **Design Patterns:**  
+  - Apply at least two patterns (e.g., Factory, Observer)  
+
+---
+
+## Compilation & Run
+
+```bash
+# Unix / Linux / macOS
+cmake -S . -B build -DCMAKE_BUILD_TYPE=Debug
+cmake --build build
+
+# or with helper script
+./scripts/cmake.sh configure
+./scripts/cmake.sh build
+
+# Windows (GCC + Ninja)
+cmake -S . -B build -DCMAKE_BUILD_TYPE=Debug -G Ninja
+cmake --build build
+
+````
+
+
+
+
+
+
+### RO
+
+----
+
 # Sistem de Management pentru Spital
 Acest proiect implementează un sistem orientat pe obiect pentru gestionarea activităților dintr-un spital, inclusiv pacienți, personal medical și servicii medicale. 
 
