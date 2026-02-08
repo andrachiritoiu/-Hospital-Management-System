@@ -1,88 +1,117 @@
-### EN
+> **Romanian version available:** [README.ro.md](README.ro.md)
 
-----
 # Hospital Management System
-This project implements an object-oriented system for managing activities in a hospital, including patients, medical staff, and medical services.
+
+This project implements an **object-oriented Hospital Management System** designed to simulate and manage core hospital activities, including patient administration, medical staff workflows, and the execution of medical services.
+
+The application is developed in **C++** and uses **CMake** as the build system. Its primary goal is to demonstrate a **clean, structured, and meaningful application of object-oriented programming principles**, together with modern C++ features such as the **Standard Template Library (STL)**, **class templates**, **exception handling**, and **design patterns**.
+
+The system emphasizes:
+- clear separation of responsibilities between components,
+- safe and maintainable object ownership,
+- realistic interactions between entities found in a hospital environment.
+
+---
+
+## General Structure
+
+The project is organized around multiple interacting class hierarchies that model real-world hospital entities. Each hierarchy encapsulates a well-defined responsibility and collaborates with others through composition and polymorphic behavior.
 
 ### 1. Person Hierarchy
 
-- **`Person`** (abstract base class)  
-  - **`Patient`**  
-  - **`HospitalStaff`** (abstract)  
-    - **`Doctor`**  
-      - evaluate patients  
-      - prescribe treatments  
-      - schedule surgeries  
-    - **`Nurse`**  
-      - administer treatments  
-      - perform lab analyses  
+The **Person hierarchy** models all human actors involved in the hospital workflow.
+
+**Base class:** `Person` *(abstract)*  
+Represents a generic individual identified by common attributes and behaviors shared across all persons.
+
+**Derived classes:**
+- **`Patient`**  
+  Represents a person receiving medical care. Patients maintain medical status information and interact with medical services through evaluations, treatments, and procedures.
+
+- **`HospitalStaff`** *(abstract)*  
+  Represents medical personnel employed by the hospital. This class defines shared behavior for all staff members and serves as a polymorphic base for specialized roles.
+
+  **Specialized subclasses:**
+  - **`Doctor`**
+    - evaluates and diagnoses patients
+    - prescribes personalized treatment plans
+    - schedules and performs surgical procedures
+    - participates in patient discharge decisions
+  - **`Nurse`**
+    - administers prescribed treatments
+    - performs laboratory analyses
+    - supports doctors during medical procedures
+
+Polymorphism is used extensively to enable uniform handling of different person types while preserving role-specific behavior.
+
+---
 
 ### 2. Service Hierarchy
 
-- **`Service`** (base class)  
-  - **`Consultation`**  
-    - `InitialConsultation`  
-    - `FollowUpConsultation`  
-  - **`Surgery`**  
-  - **`LabTest`**  
+The **Service hierarchy** models medical activities performed within the hospital.
+
+**Base class:** `Service`  
+Defines the common interface for all medical services and enables polymorphic execution and tracking.
+
+**Derived classes:**
+- **`Consultation`**  
+  Represents a medical consultation between a patient and a doctor.
+  - `InitialConsultation` – used for first-time evaluations
+  - `FollowUpConsultation` – used for monitoring patient progress
+- **`Surgery`**  
+  Represents a surgical intervention scheduled and performed by a doctor.
+- **`LabTest`**  
+  Represents laboratory analyses performed to support medical diagnosis.
+
+Each service type encapsulates its own logic and constraints while exposing a uniform interface to the rest of the system.
 
 ---
 
-## Features
+## Functionalities
 
-### For **Doctors**  
-- List all admitted patients  
-- View today's appointments  
-- Assess patient condition  
-- Prescribe personalized treatments  
-- Schedule and perform surgeries  
-- Discharge patients  
-- Calculate performance bonus  
-- Log out  
+The application provides role-based functionality, ensuring that each type of user can only perform actions relevant to their responsibilities.
 
-### For **Nurses**  
-- List admitted patients (alphabetical)  
-- Administer treatments  
-- Run lab tests  
-- Calculate activity bonus  
-- Log out  
+### Doctor Functionalities
+- View all currently admitted patients
+- Access and manage the list of scheduled medical appointments
+- Evaluate and update patient medical conditions
+- Prescribe and adjust personalized treatment plans
+- Schedule and perform surgical procedures
+- Approve and execute patient discharge
+- Calculate performance-based salary bonuses
+- Securely log out from the system
+
+### Nurse Functionalities
+- View all admitted patients sorted alphabetically
+- Administer treatments according to prescribed medical plans
+- Perform laboratory tests and record results
+- Assist doctors during medical procedures
+- Calculate activity-based salary bonuses
+- Securely log out from the system
 
 ---
+
+
 
 ## Requirements
 
-- **Language:** C++ (no global variables; private/protected members)  
-- **Build:** CMake (project files generated via `cmake`)  
-- **Menu:** Interactive console menu demonstrating functionality  
-- **OOP:**  
-  - At least **2–3 class hierarchies** interacting via composition or method calls  
-  - One class with:  
-    - initialization constructors  
-    - overloaded constructors  
-    - copy constructor & `operator=`  
-    - destructor  
-    - `operator<<` and `operator>>`  
-    - one member operator overload  
-    - one non‑member operator overload  
-  - Virtual destructors and proper base‑class constructor chaining  
-  - Upcasts/downcasts showcased in meaningful methods  
-- **Templates:**  
-  - One class template + two instantiations  
-- **STL:**  
-  - Use at least two containers (e.g., `std::vector`, `std::list`)  
-  - One algorithm with a lambda (e.g., `std::sort`)  
-- **Static & Constants:**  
-  - One or more static data members/functions  
-  - Extensive use of `const` where appropriate  
-- **Exceptions:**  
-  - Derive from `std::exception`  
-  - Demonstrate exception propagation and upcasting in `catch` blocks  
-- **Design Patterns:**  
-  - Apply at least two patterns (e.g., Factory, Observer)  
+### Template Usage
+Students must use the template corresponding to their laboratory group:
+
+| Teaching Assistant | Template Link |
+|--------------------|---------------|
+| Dragoș B           | https://github.com/Ionnier/oop-template |
+| Tiberiu M          | https://github.com/MaximTiberiu/oop-template |
+| Marius MC          | https://github.com/mcmarius/oop-template |
 
 ---
 
-## Compilation & Run
+## Build & Compilation Instructions
+
+The project is configured using **CMake**.
+
+
+### Compilation & Run
 
 ```bash
 # Unix / Linux / macOS
@@ -99,160 +128,109 @@ cmake --build build
 
 ````
 
+## Mandatory Requirements
 
+Failure to meet any of the following requirements will result in **automatic disqualification of the project**.
 
+- The program must be written in **C++**
+- The program must include an **interactive menu** (used only to demonstrate functionality)
+- The program must compile **without errors**
+- **No global variables** are allowed
+- All data members must be declared as `private` or `protected`
+- **GitHub Actions** workflows must pass successfully
+- Git commits must be **adequate, consistent, and incremental**
+- Avoid meaningless use of language features
+- Avoid using language features with the intent of “legally” bypassing other rules, such as:
+  - excessive use of `friend` classes
+  - excessive use of static members
+- Each requirement is graded as follows:
+  - **50% for correct implementation**
+  - **50% for meaningful and justified usage**
 
+---
 
+## Requirements
 
-### RO
+- [ ] Definition of at least **2–3 class hierarchies** that interact within the chosen domain  
+      (via composition, aggregation, or logical method calls) *(6 points)*
 
-----
+  - At least one class must implement:
+    - [ ] initialization constructors  [*](https://github.com/Ionnier/poo/tree/main/labs/L02#crearea-obiectelor)
+    - [ ] overloaded constructors  [*](https://github.com/Ionnier/poo/tree/main/labs/L02#supra%C3%AEnc%C4%83rcarea-func%C8%9Biilor)
+    - [ ] copy constructors  [*](https://github.com/Ionnier/poo/tree/main/labs/L02#crearea-obiectelor)
+    - [ ] copy assignment operator (`operator=`)  [*](https://github.com/Ionnier/poo/tree/main/labs/L02#supra%C3%AEnc%C4%83rcarea-operatorilor)
+    - [ ] destructor  [*](https://github.com/Ionnier/poo/tree/main/labs/L02#crearea-obiectelor)
+    - [ ] `operator<<` for output (`std::ostream`)  [*](https://github.com/Ionnier/poo/blob/main/labs/L02/fractie.cpp#L123)
+    - [ ] `operator>>` for input (`std::istream`)  [*](https://github.com/Ionnier/poo/blob/main/labs/L02/fractie.cpp#L128)
+    - [ ] one overloaded **member** operator  [*](https://github.com/Ionnier/poo/blob/main/labs/L02/fractie.cpp#L32)
+    - [ ] one overloaded **non-member** operator  [*](https://github.com/Ionnier/poo/blob/main/labs/L02/fractie.cpp#L39)  
+      *(not necessarily declared as `friend`)*
 
-# Sistem de Management pentru Spital
-Acest proiect implementează un sistem orientat pe obiect pentru gestionarea activităților dintr-un spital, inclusiv pacienți, personal medical și servicii medicale. 
+---
 
-# Structura Generală
+### Derived Classes
 
-1. Ierarhia Persoanelor
-    
-Clasă de bază: Persoana  
+- [ ] Implementation of domain-specific functionality using **upcasting** and **downcasting**  
+      [upcast](https://github.com/Ionnier/poo/tree/main/labs/L04#solu%C8%9Bie-func%C8%9Bii-virtuale-late-binding) / [downcast](https://github.com/Ionnier/poo/tree/main/labs/L04#smarter-downcast-dynamic-cast)
 
-Clase derivate:  
--Pacient  
--PersonalSpital (abstractă) 
-    Subclase:  
-         -Medic: evalueaza pacienți, efectuează operații, prescrie rețete  
-         -Asistent: administrează tratamente, face analize  
-   
-2.Ierarhia Serviciilor
+  - This must be demonstrated through **2–3 meaningful methods**
+  - Input/output functions and destructors are **excluded**, although they must still be implemented
 
-Clasa de bază: Servicii 
+- [ ] Explicit invocation of the base-class constructor from derived-class constructors   [*](https://github.com/Ionnier/poo/tree/main/labs/L04#comportamentul-constructorului-la-derivare)
+- [ ] Properly overridden copy constructors and copy assignment operators (`cc` / `operator=`)   [*](https://github.com/Ionnier/poo/tree/main/labs/L04#comportamentul-constructorului-de-copiere-la-derivare)
+- [ ] Use of **virtual destructors** where required  [*](https://github.com/Ionnier/poo/tree/main/labs/L04#solu%C8%9Bie-func%C8%9Bii-virtuale-late-binding)
 
-Clase derivate:  
--Consultatie   
-    Subclase:  
-           -ConsultatieInitiala  
-           -ConsultatieUrmarire  
-   
--Operatie  
--Analiza   
+---
 
-# Functionalitati  
-Funcționalități Medic:  
--Vizualizează toți pacienții activi internați în spital  
--Accesează lista programărilor medicale curente  
--Evaluează starea medicală a pacienților  
--Prescrie tratamente personalizate  
--Programează intervenții chirurgicale  
--Efectuează externarea pacienților  
--Calculează bonusul salarial în funcție de performanță  
--Se poate deconecta din contul de utilizator  
+### Additional Constraints
 
-Funcționalități Asistent:  
--Vizualizează pacienții activi internați, sortați alfabetic  
--Administrează tratamente conform planului medical  
--Realizează analize medicale  
--Calculează bonusul salarial în funcție de activitatea desfășurată  
--Se poate deconecta din contul de utilizator  
+- Only the necessary functionality should be implemented for the remaining classes
+- At least **one more complex hierarchy** must exist  
+  - base class + **2–3 derived classes**
+- A class hierarchy is considered valid even if the base class does not inherit from another hierarchy
 
+- [ ] Extensive and meaningful use of `const`   *(0.25 points)*   [*](https://github.com/Ionnier/poo/tree/main/labs/L04#reminder-const-everywhere)
 
-# Cerinte:
+- [ ] Use of **static members and functions** inside classes  *(0.5 points)*   [*](https://github.com/Ionnier/poo/tree/main/labs/L04#static)
+  - [ ] at least **one non-trivial static data member**
+  - [ ] at least **one non-trivial static member function**
 
-### Folosiți template-ul corespunzător grupei voastre!
+- [ ] **Exceptions**  *(0.5 points)*  [*](https://github.com/Ionnier/poo/tree/main/labs/L04#exception-handling)
 
-| Laborant  | Link template                                |
-|-----------|----------------------------------------------|
-| Dragoș B  | https://github.com/Ionnier/oop-template      |
-| Tiberiu M | https://github.com/MaximTiberiu/oop-template |
-| Marius MC | https://github.com/mcmarius/oop-template     |
+  - custom exception classes derived from `std::exception`
+  - demonstration of exception propagation
+  - demonstration of upcasting in `catch` blocks
+  - used in at least one scenario where classical error handling is difficult
 
-## Instrucțiuni de compilare
+- [ ] Use of at least **one abstract class**  *(0.25 points)*   [*](https://github.com/Ionnier/poo/tree/main/labs/L04#clase-abstracte)
 
-Proiectul este configurat cu CMake.
+- [ ] **Templates**
+  - [ ] creation of one class template  *(1 point)*  [*](https://github.com/Ionnier/poo/tree/main/labs/L08)
+  - [ ] at least **two instantiations** of that template  *(0.5 points)*
 
-Instrucțiuni pentru terminal:
+- [ ] **STL Usage**  *(0.25 points)*  [*](https://github.com/Ionnier/poo/tree/main/labs/L07#stl)
 
-1. Pasul de configurare
-```sh
-cmake -S . -B build -DCMAKE_BUILD_TYPE=Debug
-# sau ./scripts/cmake.sh configure
-```
+  - [ ] usage of at least **two different STL containers**  
+        (e.g. `std::vector`, `std::list`, or similar)
+  - [ ] usage of at least **one STL algorithm with a lambda expression**  
+        (e.g. `std::sort`, `std::transform`)
 
-Sau pe Windows cu GCC:
-```sh
-cmake -S . -B build -DCMAKE_BUILD_TYPE=Debug -G Ninja
-# sau ./scripts/cmake.sh configure -g Ninja
-```
+- [ ] **Design Patterns**  *(0.75 points)*  [*](https://github.com/Ionnier/poo/tree/main/labs/L08)
+  - [ ] implementation of at least **two design patterns**
 
-La acest pas putem cere să generăm fișiere de proiect pentru diverse medii de lucru.
+---
 
-## Cerințe obligatorii
+## Notes
 
-Nerespectarea duce la nepunctarea proiectului
+- Up to **2 points may be deducted** for issues such as:
+  - memory leaks
+  - missing virtual destructors where required
+  - abuse of certain concepts (e.g. declaring all functions as `virtual`)
+  - calling virtual functions inside constructors
 
-  - programul va fi scris în C++
-  - programul va avea un meniu interactiv (doar pentru ilustrarea funcționalității)
-  - programul nu are erori de compilare
-  - fară variabile globale
-  - datele membre private(sau protected)
-  - GitHub Actions trecute
-  - commit-uri pe Git adecvate si punctuale
-  - folosirea a funcționalităților limbajului fără sens
-  - folosirea a funcționlităților limbajului cu scopul de a încălca "legal" o altă regulă
-      - folosirea excesivă a claselor friend
-      - folosirea excesviă a elementelor statice
-  - fiecare cerinta va fi punctate 1/2 pe implementare + 1/2 pe faptul ca a fost implementata cu sens
+- These topics are generally covered by the  
+  [C++ Core Guidelines](https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md),  
+  but an exhaustive study of the document is **not required**. The code simply needs to be well-structured and responsibly written.
 
-## Cerințe
-- [ ] definirea a minim **2-3 ieararhii de clase** care sa interactioneze in cadrul temei alese (fie prin compunere, agregare sau doar sa apeleze metodele celeilalte intr-un mod logic) (6p)
-  - minim o clasa cu:
-    - [ ] constructori de inițializare [*](https://github.com/Ionnier/poo/tree/main/labs/L02#crearea-obiectelor)
-    - [ ] constructor supraîncărcat [*](https://github.com/Ionnier/poo/tree/main/labs/L02#supra%C3%AEnc%C4%83rcarea-func%C8%9Biilor)
-    - [ ] constructori de copiere [*](https://github.com/Ionnier/poo/tree/main/labs/L02#crearea-obiectelor)
-    - [ ] `operator=` de copiere [*](https://github.com/Ionnier/poo/tree/main/labs/L02#supra%C3%AEnc%C4%83rcarea-operatorilor)
-    - [ ] destructor [*](https://github.com/Ionnier/poo/tree/main/labs/L02#crearea-obiectelor)
-    - [ ] `operator<<` pentru afișare (std::ostream) [*](https://github.com/Ionnier/poo/blob/main/labs/L02/fractie.cpp#L123)
-    - [ ] `operator>>` pentru citire (std::istream) [*](https://github.com/Ionnier/poo/blob/main/labs/L02/fractie.cpp#L128)
-    - [ ] alt operator supraîncărcat ca funcție membră [*](https://github.com/Ionnier/poo/blob/main/labs/L02/fractie.cpp#L32)
-    - [ ] alt operator supraîncărcat ca funcție non-membră [*](https://github.com/Ionnier/poo/blob/main/labs/L02/fractie.cpp#L39) - nu neaparat ca friend
-  - in derivate
-      - [ ] implementarea funcționalităților alese prin [upcast](https://github.com/Ionnier/poo/tree/main/labs/L04#solu%C8%9Bie-func%C8%9Bii-virtuale-late-binding) și [downcast](https://github.com/Ionnier/poo/tree/main/labs/L04#smarter-downcast-dynamic-cast)
-        - aceasta va fi făcută prin **2-3** metode specifice temei alese
-        - funcțiile pentru citire / afișare sau destructorul nu sunt incluse deși o să trebuiască să le implementați 
-      - [ ] apelarea constructorului din clasa de bază din [constructori din derivate](https://github.com/Ionnier/poo/tree/main/labs/L04#comportamentul-constructorului-la-derivare)
-      - [ ] suprascris [cc](https://github.com/Ionnier/poo/tree/main/labs/L04#comportamentul-constructorului-de-copiere-la-derivare)/op= pentru copieri/atribuiri corecte
-      - [ ] destructor [virtual](https://github.com/Ionnier/poo/tree/main/labs/L04#solu%C8%9Bie-func%C8%9Bii-virtuale-late-binding)
-  - pentru celelalte clase se va definii doar ce e nevoie
-  - minim o ierarhie mai dezvoltata (cu 2-3 clase dintr-o clasa de baza)
-  - ierarhie de clasa se considera si daca exista doar o clasa de bază însă care nu moștenește dintr-o clasă din altă ierarhie
-- [ ] cât mai multe `const` [(0.25p)](https://github.com/Ionnier/poo/tree/main/labs/L04#reminder-const-everywhere)
-- [ ] funcții și atribute `static` (în clase) [0.5p](https://github.com/Ionnier/poo/tree/main/labs/L04#static)
-  - [ ] 1+ atribute statice non-triviale 
-  - [ ] 1+ funcții statice non-triviale
-- [ ] excepții [0.5p](https://github.com/Ionnier/poo/tree/main/labs/L04#exception-handling)
-  - porniți de la `std::exception`
-  - ilustrați propagarea excepțiilor
-  - ilustrati upcasting-ul în blocurile catch
-  - minim folosit într-un loc în care tratarea erorilor în modurile clasice este mai dificilă
-- [ ] folosirea unei clase abstracte [(0.25p)](https://github.com/Ionnier/poo/tree/main/labs/L04#clase-abstracte)
- - [ ] clase template
-   - [ ] crearea unei clase template [(1p)](https://github.com/Ionnier/poo/tree/main/labs/L08)
-   - [ ] 2 instanțieri ale acestei clase (0.5p)
- - STL [(0.25p)](https://github.com/Ionnier/poo/tree/main/labs/L07#stl)
-   - [ ] utilizarea a două structuri (containere) diferite (vector, list sau orice alt container care e mai mult sau mai putin un array)
-   - [ ] utilizarea a unui algoritm cu funcție lambda (de exemplu, sort, transform)
- - Design Patterns [(0.75p)](https://github.com/Ionnier/poo/tree/main/labs/L08)
-   - [ ] utilizarea a două șabloane de proiectare
+- The `build/` and `install_dir/` directories are included in `.gitignore` because they contain generated files and should not be version-controlled.
 
-### Observații
-
-* Pot exista depunctări până la 2p pentru diferite aspecte precum:
-  - memory leak-uri
-  - nefolosirea destructorului virtual la nevoie
-  - abuzarea de diferite concepte (toate funcțiile declarate virtual)
-  - apelarea de funcții virtual în constructori
-
-* În general, acestea sunt prezente în [CppCoreGuideline](https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md), dar nu e nevoie să parcurgeți documentul, doar să scrieți codul suficient de organizat
-
-* folderele `build/` și `install_dir/` sunt adăugate în fișierul `.gitignore` deoarece
-conțin fișiere generate și nu ne ajută să le versionăm.
